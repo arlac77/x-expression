@@ -4,7 +4,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "main": "{{module}}",
+  "main": "src/grammar.mjs",
+  "module": "src/grammar.mjs",
   "description": "simple expressions for x-path like operations",
   "keywords": [],
   "contributors": [
@@ -16,8 +17,8 @@
   "license": "BSD-2-Clause",
   "scripts": {
     "cover": "c8 --temp-directory build/coverage ava && c8 report -r lcov --temp-directory build/coverage",
-    "docs": "documentation readme {{module}} --section=API",
-    "lint": "documentation lint {{module}}",
+    "docs": "documentation readme src/grammar.mjs --section=API",
+    "lint": "documentation lint src/grammar.mjs",
     "posttest": "markdown-doctest",
     "test": "ava"
   },
