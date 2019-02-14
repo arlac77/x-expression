@@ -1,5 +1,14 @@
 import test from "ava";
-import { ExpressionParser, createValue } from "../src/grammar";
+import { ExpressionParser } from "../src/grammar";
+import { createValue } from "../src/util";
+
+
+function expand(expression) {
+  const parser = new ExpressionParser();
+
+  const ast = parser.parse(expression);
+  return ast.value;
+}
 
 test("null expansion", async t => {
   t.deepEqual(

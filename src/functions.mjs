@@ -4,10 +4,10 @@ import { promisify } from "util";
 import { spawn } from "child_process";
 import { dirname, resolve } from "path";
 import crypto from "crypto";
-const { createCipher, createDecipher } = crypto;
-
 import fs from "fs";
+
 const { readFile } = fs.promises;
+const { createCipher, createDecipher } = crypto;
 
 /**
  * @typedef {Object} Value
