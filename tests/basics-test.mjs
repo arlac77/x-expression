@@ -2,8 +2,7 @@ import test from "ava";
 import { ExpressionParser } from "../src/grammar";
 import { createValue } from "../src/util";
 
-
-function expand(expression) {
+function exp(expression) {
   const parser = new ExpressionParser();
 
   const ast = parser.parse(expression);
@@ -12,7 +11,7 @@ function expand(expression) {
 
 test("null expansion", async t => {
   t.deepEqual(
-    await expand({
+    await exp({
       name: "a1"
     }),
     {
@@ -22,106 +21,100 @@ test("null expansion", async t => {
 });
 
 test("os", async t => {
-  t.is(await expand("${os.arch}"), "x64");
+  t.is(await exp("os.arch"), "x64");
   t.truthy(
     ["aix", "darwin", "freebsd", "linux", "win32"].includes(
-      await expand("${os.platform}")
+      await exp("os.platform")
     )
   );
 });
 
-test("string concat", async t => t.is(await expand("${'x' + 'y'}"), "xy"));
-test("addition", async t => t.is(await expand("${1 + 2}"), 3));
-test("substraction", async t => t.is(await expand("${3 - 2}"), 1));
-test("multiplication", async t => t.is(await expand("${3 * 2}"), 6));
-test("division", async t => t.is(await expand("${8/2}"), 4));
-test("number", async t => t.is(await expand("${number('77')}"), 77));
+test("string concat", async t => t.is(await exp("'x' + 'y'"), "xy"));
+test("addition", async t => t.is(await exp("1 + 2"), 3));
+test("substraction", async t => t.is(await exp("3 - 2"), 1));
+test("multiplication", async t => t.is(await exp("3 * 2"), 6));
+test("division", async t => t.is(await exp("8/2"), 4));
+test("number", async t => t.is(await exp("number('77')"), 77));
 
-test("greater than false", async t => t.falsy(await expand("${1 > 2}")));
-test("greater than true", async t => t.truthy(await expand("${2 > 1}")));
-test("greater equal false", async t => t.falsy(await expand("${1 >= 2}")));
-test("greater equal true", async t => t.truthy(await expand("${2 >= 1}")));
-test("less than false", async t => t.falsy(await expand("${2 < 1}")));
-test("less than true", async t => t.truthy(await expand("${1 < 2}")));
+test("greater than false", async t => t.falsy(await exp("1 > 2")));
+test("greater than true", async t => t.truthy(await exp("2 > 1")));
+test("greater equal false", async t => t.falsy(await exp("1 >= 2")));
+test("greater equal true", async t => t.truthy(await exp("2 >= 1")));
+test("less than false", async t => t.falsy(await exp("2 < 1")));
+test("less than true", async t => t.truthy(await exp("1 < 2")));
 
-test("less equal than false", async t => t.falsy(await expand("${2 <= 1}")));
-test("less equal than true", async t => t.truthy(await expand("${1 <= 2}")));
+test("less equal than false", async t => t.falsy(await exp("2 <= 1")));
+test("less equal than true", async t => t.truthy(await exp("1 <= 2")));
 
-test("equal true", async t => t.truthy(await expand("${1 == 1}")));
-test("equal false", async t => t.falsy(await expand("${1 == 2}")));
+test("equal true", async t => t.truthy(await exp("1 == 1")));
+test("equal false", async t => t.falsy(await exp("1 == 2")));
 
-test("not equal true", async t => t.truthy(await expand("${2 != 1}")));
-test("not equal false", async t => t.falsy(await expand("${2 != 2}")));
+test("not equal true", async t => t.truthy(await exp("2 != 1")));
+test("not equal false", async t => t.falsy(await exp("2 != 2")));
 
-test("or false", async t => t.falsy(await expand("${0 || 0}")));
-test("or true", async t => t.truthy(await expand("${1 || 0}")));
+test("or false", async t => t.falsy(await exp("0 || 0")));
+test("or true", async t => t.truthy(await exp("1 || 0")));
 
-test("and false", async t => t.falsy(await expand("${1 && 0}")));
-test("and true", async t => t.truthy(await expand("${1 && 1}")));
+test("and false", async t => t.falsy(await exp("1 && 0")));
+test("and true", async t => t.truthy(await exp("1 && 1")));
 
-test("or true cobined", async t => t.truthy(await expand("${1 > 2 || 1 > 0}")));
-test("or false cobined", async t => t.falsy(await expand("${1 > 2 || 1 < 0}")));
+test("or true cobined", async t => t.truthy(await exp("1 > 2 || 1 > 0")));
+test("or false cobined", async t => t.falsy(await exp("1 > 2 || 1 < 0")));
 
-test("and false cobined", async t => t.falsy(await expand("${1>0 && 0>1}")));
-test("and true cobined", async t => t.truthy(await expand("${1>0 && 2>0}")));
+test("and false cobined", async t => t.falsy(await exp("1>0 && 0>1")));
+test("and true cobined", async t => t.truthy(await exp("1>0 && 2>0")));
 
-test("tenery true 1st.", async t =>
-  t.is(await expand("${2 > 1 ? 22 : 11}"), 22));
-test("tenery false 2nd.", async t =>
-  t.is(await expand("${2 < 1 ? 22 : 11}"), 11));
+test("tenery true 1st.", async t => t.is(await exp("2 > 1 ? 22 : 11"), 22));
+test("tenery false 2nd.", async t => t.is(await exp("2 < 1 ? 22 : 11"), 11));
 test("tenery combined false 2nd.", async t =>
-  t.is(await expand("${2 < 1 ? 22+1 : 11+1}"), 12));
+  t.is(await exp("2 < 1 ? 22+1 : 11+1"), 12));
 test("tenery combined true 2nd.", async t =>
-  t.is(await expand("${2*0 < 1 ? 22+1 : 11+1}"), 23));
+  t.is(await exp("2*0 < 1 ? 22+1 : 11+1"), 23));
 test("tenery combined true 2nd. with function call", async t =>
-  t.is(await expand("${'a'=='b' ? 22+1 : substring('abc',1,2)}"), "b"));
+  t.is(await exp("'a'=='b' ? 22+1 : substring('abc',1,2)"), "b"));
 test("tenery combined true with property access", async t =>
-  t.is(
-    await expand("${os.platform=='darwin' || os.platform=='linux' ? 1 : 0}"),
-    1
-  ));
+  t.is(await exp("os.platform=='darwin' || os.platform=='linux' ? 1 : 0"), 1));
 
 test("toUpperCase", async t =>
-  t.is(await expand("${toUpperCase('lower')}"), "LOWER"));
+  t.is(await exp("toUpperCase('lower')"), "LOWER"));
 test("toLowerCase", async t =>
-  t.is(await expand("${toLowerCase('UPPER')}"), "upper"));
-test("substring", async t =>
-  t.is(await expand("${substring('lower',1,3)}"), "ow"));
+  t.is(await exp("toLowerCase('UPPER')"), "upper"));
+test("substring", async t => t.is(await exp("substring('lower',1,3)"), "ow"));
 test("replace", async t =>
-  t.is(await expand("${replace('lower','ow','12')}"), "l12er"));
+  t.is(await exp("replace('lower','ow','12')"), "l12er"));
 
 test("unknown function", async t =>
-  t.throwsAsync(async () => expand("${  thisFunctionIsUnknown()}"), {
+  t.throwsAsync(async () => exp("  thisFunctionIsUnknown()"), {
     message: '1,2: Unknown function "thisFunctionIsUnknown"'
   }));
 
 test("missing argument", async t =>
-  t.throwsAsync(async () => expand("${toUpperCase()}"), {
+  t.throwsAsync(async () => exp("toUpperCase()"), {
     message: '1,0: Missing argument "toUpperCase"'
   }));
 
 test("wrong argument type", async t =>
-  t.throwsAsync(async () => expand("${toUpperCase(2)}"), {
+  t.throwsAsync(async () => exp("toUpperCase(2)"), {
     message: '1,0: Wrong argument type string != number "toUpperCase"'
   }));
 
-test("length (string)", async t => t.is(await expand("${length('abc')}"), 3));
-test("length (array)", async t => t.is(await expand("${length([1,2,3])}"), 3));
+test("length (string)", async t => t.is(await exp("length('abc')"), 3));
+test("length (array)", async t => t.is(await exp("length([1,2,3])"), 3));
 
-test("first", async t => t.is(await expand("${first(1,2,3)}"), 1));
+test("first", async t => t.is(await exp("first(1,2,3)"), 1));
 
 test("split", async t =>
-  t.deepEqual(await expand("${split('1,2,3,4',',')}"), ["1", "2", "3", "4"]));
+  t.deepEqual(await exp("split('1,2,3,4',',')"), ["1", "2", "3", "4"]));
 
 test("substring with expressions", async t =>
-  t.is(await expand("${substring('lower',1,1+2*1)}"), "ow"));
+  t.is(await exp("substring('lower',1,1+2*1)"), "ow"));
 
 test("encrypt/decrypt", async t =>
-  t.is(await expand("${decrypt('key',encrypt('key','secret'))}"), "secret"));
+  t.is(await exp("decrypt('key',encrypt('key','secret'))"), "secret"));
 
 test("user defined functions", async t =>
   t.is(
-    await expand("${myFunction()}", {
+    await exp("myFunction()", {
       functions: {
         myFunction: {
           arguments: [],
@@ -136,8 +129,8 @@ test("user defined functions", async t =>
 
 test("function promise arg", async t =>
   t.is(
-    await expand(
-      "${substring(string(document('../tests/fixtures/short.txt')),0,4)}",
+    await exp(
+      "substring(string(document('../tests/fixtures/short.txt')),0,4)",
       {
         constants: {
           basedir: __dirname
@@ -149,8 +142,8 @@ test("function promise arg", async t =>
 
 test("two promises binop", async t =>
   t.is(
-    (await expand(
-      "${document('../tests/fixtures/short.txt') + document('../tests/fixtures/short2.txt')}",
+    (await exp(
+      "document('../tests/fixtures/short.txt') + document('../tests/fixtures/short2.txt')",
       {
         constants: {
           basedir: __dirname
@@ -162,7 +155,7 @@ test("two promises binop", async t =>
 
 test("left only promise binop", async t =>
   t.is(
-    (await expand("${document('../tests/fixtures/short.txt') + 'XX'}", {
+    (await exp("document('../tests/fixtures/short.txt') + 'XX'", {
       constants: {
         basedir: __dirname
       }
@@ -172,7 +165,7 @@ test("left only promise binop", async t =>
 
 test("array access", async t =>
   t.is(
-    await expand("${myArray[2-1]}", {
+    await exp("myArray[2-1]", {
       constants: {
         myArray: ["a", "b", "c"]
       }
@@ -182,7 +175,7 @@ test("array access", async t =>
 
 test("array access cascade", async t =>
   t.is(
-    await expand("${myArray[1][2]}", {
+    await exp("myArray[1][2]", {
       constants: {
         myArray: ["a", [0, 0, 4711], "c"]
       }
@@ -192,7 +185,7 @@ test("array access cascade", async t =>
 
 test("object paths one level", async t =>
   t.is(
-    await expand("${myObject.att1}", {
+    await exp("myObject.att1", {
       constants: {
         myObject: {
           att1: "val1"
@@ -204,7 +197,7 @@ test("object paths one level", async t =>
 
 test("object paths with promise", async t =>
   t.deepEqual(
-    await expand("${include('../tests/fixtures/with_sub.json').sub}", {
+    await exp("include('../tests/fixtures/with_sub.json').sub", {
       constants: {
         basedir: __dirname,
         c1: "vc1"
@@ -217,7 +210,7 @@ test("object paths with promise", async t =>
 
 test("object paths several levels", async t =>
   t.deepEqual(
-    await expand("${myObject.level1.level2}", {
+    await exp("myObject.level1.level2", {
       constants: {
         myObject: {
           level1: {
@@ -229,14 +222,13 @@ test("object paths several levels", async t =>
     "val2"
   ));
 
-test("array literals", async t =>
-  t.deepEqual(await expand("${[1,2,3]}"), [1, 2, 3]));
+test("array literals", async t => t.deepEqual(await exp("[1,2,3]"), [1, 2, 3]));
 test("array literals nested", async t =>
-  t.deepEqual(await expand("${[1,['a'],3]}"), [1, ["a"], 3]));
+  t.deepEqual(await exp("[1,['a'],3]"), [1, ["a"], 3]));
 
 test("access objects first than array", async t =>
   t.deepEqual(
-    await expand("${myObject.level1.level2[1]}", {
+    await exp("myObject.level1.level2[1]", {
       constants: {
         myObject: {
           level1: {
@@ -250,7 +242,7 @@ test("access objects first than array", async t =>
 
 test("access objects first than array #2", async t =>
   t.deepEqual(
-    await expand("${myObject.level1[1].level2}", {
+    await exp("myObject.level1[1].level2", {
       constants: {
         myObject: {
           level1: [
@@ -266,9 +258,7 @@ test("access objects first than array #2", async t =>
   ));
 
 test.skip("split with array access", async t =>
-  t.is(await expand("${split('a:b:c:d',':')[2]}"), "c"));
+  t.is(await exp("split('a:b:c:d',':')[2]"), "c"));
 
 test.skip("condition", async t =>
-  t.deepEqual(await expand([{ "${if true}": { a: 1, b: 2 } }]), [
-    { a: 1, b: 2 }
-  ]));
+  t.deepEqual(await exp([{ "if true": { a: 1, b: 2 } }]), [{ a: 1, b: 2 }]));
