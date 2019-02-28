@@ -4,7 +4,6 @@
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 [![Build Status](https://secure.travis-ci.org/arlac77/x-expression.png)](http://travis-ci.org/arlac77/x-expression)
 [![codecov.io](http://codecov.io/github/arlac77/x-expression/coverage.svg?branch=master)](http://codecov.io/github/arlac77/x-expression?branch=master)
-[![Coverage Status](https://coveralls.io/repos/arlac77/x-expression/badge.svg)](https://coveralls.io/r/arlac77/x-expression)
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/x-expression/badge.svg)](https://snyk.io/test/github/arlac77/x-expression)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/x-expression.svg?style=flat-square)](https://github.com/arlac77/x-expression/issues)
 [![Stories in Ready](https://badge.waffle.io/arlac77/x-expression.svg?label=ready&title=Ready)](http://waffle.io/arlac77/x-expression)
