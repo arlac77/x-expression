@@ -65,5 +65,6 @@
       "url": "https://github.com/arlac77/npm-package-template-esm-only.git"
     }
   },
-  "descriotion": "simple expression language"
+  "descriotion": "simple expression language",
+  "sideEffects": false
 }
