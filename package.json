@@ -1,10 +1,11 @@
 {
   "name": "master",
   "version": "0.0.0-semantic-release",
-  "type": "module",
   "publishConfig": {
     "access": "public"
   },
+  "sideEffects": false,
+  "type": "module",
   "main": "src/grammar.mjs",
   "module": "src/grammar.mjs",
   "description": "simple expressions for x-path like operations",
@@ -65,6 +66,5 @@
       "url": "https://github.com/arlac77/npm-package-template-esm-only.git"
     }
   },
-  "descriotion": "simple expression language",
-  "sideEffects": false
+  "descriotion": "simple expression language"
 }
