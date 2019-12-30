@@ -1,7 +1,7 @@
 [![Build Status](https://secure.travis-ci.org/arlac77/x-expression.png)](http://travis-ci.org/arlac77/x-expression)
 [![codecov.io](http://codecov.io/github/arlac77/x-expression/coverage.svg?branch=master)](http://codecov.io/github/arlac77/x-expression?branch=master)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-[![downloads](http://img.shields.io/npm/dm/x-expression.svg?style=flat-square)](https://npmjs.org/package/x-expression)
+[![downloads](http://img.shields.io/npm/dm/master.svg?style=flat-square)](https://npmjs.org/package/master)
 [![GitHub Issues](https://img.shields.io/github/issues/arlac77/x-expression.svg?style=flat-square)](https://github.com/arlac77/x-expression/issues)
 [![Greenkeeper](https://badges.greenkeeper.io/arlac77/x-expression.svg)](https://greenkeeper.io/)
 [![Known Vulnerabilities](https://snyk.io/test/github/arlac77/x-expression/badge.svg)](https://snyk.io/test/github/arlac77/x-expression)
