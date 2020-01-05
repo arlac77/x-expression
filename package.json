@@ -9,7 +9,6 @@
   "main": "src/grammar.mjs",
   "module": "src/grammar.mjs",
   "description": "simple expressions for x-path like operations",
-  "keywords": [],
   "contributors": [
     {
       "name": "Markus Felten",
