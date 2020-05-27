@@ -8,8 +8,7 @@
   "type": "module",
   "main": "src/grammar.mjs",
   "exports": {
-    ".": "src/grammar.mjs",
-    "./": "./"
+    ".": "src/grammar.mjs"
   },
   "description": "simple expressions for x-path like operations",
   "contributors": [
