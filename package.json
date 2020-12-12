@@ -27,7 +27,7 @@
     "lint:docs": "documentation lint src/grammar.mjs && documentation lint ./src/grammar.mjs"
   },
   "dependencies": {
-    "pratt-parser": "^8.0.0"
+    "pratt-parser": "^8.0.10"
   },
   "devDependencies": {
     "ava": "^3.14.0",
