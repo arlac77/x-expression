@@ -1,12 +1,10 @@
-import { createValue } from "./util";
-import { expand } from "./expander";
-import { promisify } from "util";
+import crypto from "crypto";
+import { readFile } from "fs/promises";
 import { spawn } from "child_process";
 import { dirname, resolve } from "path";
-import crypto from "crypto";
-import fs from "fs";
+import { createValue } from "./util.mjs";
+import { expand } from "./expander.mjs";
 
-const { readFile } = fs.promises;
 const { createCipher, createDecipher } = crypto;
 
 /**
